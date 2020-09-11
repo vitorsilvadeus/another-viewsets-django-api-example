@@ -13,7 +13,7 @@ class ProductViewset(viewsets.ModelViewSet):
 
 
 class KitRetrieveViewset(viewsets.ModelViewSet):
-    http_method_names = ['get', 'head']
+    http_method_names = ['get', 'head','delete']
     queryset = Kit.objects.all()
     serializer_class = KitRetrieveSerializer
     filterset_fields = ('id', 'name', 'sku')

@@ -35,13 +35,15 @@ class TestProductViewSet(TestCase):
         self.assertEqual(response.status_code, 201)
 
     def test_patch(self):
-        url = reverse('products-detail', args=[Product.objects.all().first().id])
+        product_id = Product.objects.all().first().id
+        url = reverse('products-detail', args=[product_id])
 
         data = {
+            "id": product_id,
             "name": "Produto teste",
         }
 
-        response = self.client.patch(url,data )
+        response = self.client.patch(url, data, content_type='application/json')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data.get('name',None), "Produto teste")
 
@@ -93,17 +95,19 @@ class TestKitPostViewSet(TestCase):
             ]
         }
 
-        response = self.client.post(url, data)
+        response = self.client.post(url, data, content_type='application/json')
         self.assertEqual(response.status_code, 201)
 
 
     def test_patch(self):
-        url = reverse('postkits-detail', args=[Kit.objects.all().first().id])
+        kit_id = Kit.objects.all().first().id
+        url = reverse('postkits-detail', args=[kit_id])
 
         data = {
+            "kit_id": 1,
             "name": "Produto teste",
         }
 
-        response = self.client.patch(url,data )
+        response = self.client.patch(url,data, content_type='application/json' )
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data.get('name',None), "Produto teste")
+        self.assertEqual(response.data.get('name', None), "Produto teste")

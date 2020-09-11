@@ -52,15 +52,19 @@ class KitPostSerializer(Serializer):
         instance.name = validated_data.get('name', instance.name)
         instance.sku = validated_data.get('sku', instance.sku)
 
-        products = validated_data.pop('products')
-        instance.products.clear()
-        for item in products:
-            KitRelation.objects.create(
-                product=Product.objects.get(sku=item.get('sku')),
-                kit=instance,
-                amount=item.get('amount'),
-                discount=item.get('discount'),
-            )
+        try:
+            products = validated_data.pop('products')
+        except KeyError:
+            pass
+        else:
+            instance.products.clear()
+            for item in products:
+                KitRelation.objects.create(
+                    product=Product.objects.get(sku=item.get('sku')),
+                    kit=instance,
+                    amount=item.get('amount'),
+                    discount=item.get('discount'),
+                )
 
         instance.save()
         return instance
