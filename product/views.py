@@ -19,7 +19,7 @@ class KitRetrieveViewset(viewsets.ModelViewSet):
     filterset_fields = ('id', 'name', 'sku')
 
     @action(detail=True, methods=['get'])
-    def get_stock(self, request, pk=None):
+    def get_calc(self, request, pk=None):
         kit = self.get_object()
 
         return Response(
