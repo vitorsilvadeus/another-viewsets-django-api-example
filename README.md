@@ -6,9 +6,7 @@ CRUD for e-commerce products and kits of products and some aggregation data retr
 https://www.getpostman.com/collections/bc7b696e1d16d5db5d0f
  
 
-###Installing
-
-###Installation on ubuntu 18.04
+### Set up on ubuntu 18.04
 
 #### Install and set up Postgres:
 ``` bash
