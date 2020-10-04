@@ -1,5 +1,7 @@
 from django.test import TestCase
 from product.models import Product, Kit
+from product.serializers import KitProductsSerializer
+
 from django.urls import reverse
 
 
@@ -111,3 +113,35 @@ class TestKitPostViewSet(TestCase):
         response = self.client.patch(url,data, content_type='application/json' )
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data.get('name', None), "Produto teste")
+
+
+class TestKitProductsSerializer(TestCase):
+
+    def test_validate_discount(self):
+        self.assertFalse(
+            KitProductsSerializer(
+                data={
+                    "sku": "Ac002248",
+                    "amount": 3,
+                    "discount": 1.1
+                }
+            ).is_valid()
+        )
+        self.assertFalse(
+            KitProductsSerializer(
+                data={
+                    "sku": "Ac002248",
+                    "amount": 3,
+                    "discount": -1.0
+                }
+            ).is_valid()
+        )
+        self.assertTrue(
+            KitProductsSerializer(
+                data={
+                    "sku": "Ac002248",
+                    "amount": 3,
+                    "discount": 0.1
+                }
+            ).is_valid()
+        )
